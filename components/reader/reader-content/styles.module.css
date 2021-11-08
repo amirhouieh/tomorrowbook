@@ -1,0 +1,89 @@
+.content{
+    height: calc(100vh - calc(var(--padding) * 2) - var(--headerH));
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+
+    -moz-column-gap:0.363%; /* Firefox */
+    -webkit-column-gap:0.363%; /* Safari and Chrome */
+    column-gap:0.363%;
+}
+
+/* #### Mobile Phones Portrait #### */
+@media screen and (max-width: 480px) and (orientation: portrait){
+    .col{
+        -moz-column-count:1; /* Firefox */
+        -webkit-column-count:1; /* Safari and Chrome */
+        column-count:1;
+    }
+
+}
+
+/* #### Mobile Phones Landscape #### */
+@media screen and (max-width: 640px) and (orientation: landscape){
+    .content{
+        -moz-column-count:2; /* Firefox */
+        -webkit-column-count:2; /* Safari and Chrome */
+        column-count:2;
+    }
+}
+
+/* #### Mobile Phones Portrait or Landscape #### */
+@media screen and (min-width: 480px) and (max-width: 640px){
+    .content{
+        -moz-column-count:2; /* Firefox */
+        -webkit-column-count:2; /* Safari and Chrome */
+        column-count:2;
+    }
+}
+
+@media screen and (min-width: 640px) and (max-width: 758px){
+    .content{
+        -moz-column-count:3; /* Firefox */
+        -webkit-column-count:3; /* Safari and Chrome */
+        column-count:3;
+    }
+
+}
+/* #### iPhone 4+ Portrait or Landscape #### */
+@media screen and (max-width: 480px) and (-webkit-min-pixel-ratio: 2){
+    .content{
+        -moz-column-count:2; /* Firefox */
+        -webkit-column-count:2; /* Safari and Chrome */
+        column-count:2;
+    }
+}
+
+
+/* #### Tablets Portrait or Landscape #### */
+@media screen and (min-width: 768px) and (max-width: 900px){
+    .content{
+        -moz-column-count:4; /* Firefox */
+        -webkit-column-count:4; /* Safari and Chrome */
+        column-count:4;
+    }
+
+}
+
+/* #### Tablets Portrait or Landscape #### */
+@media screen and (min-width: 900px) and (max-width: 1200px){
+    .content{
+        -moz-column-count:5; /* Firefox */
+        -webkit-column-count:5; /* Safari and Chrome */
+        column-count:5;
+    }
+
+}
+
+/* #### Desktops #### */
+@media screen and (min-width: 1200px){
+    .content{
+        -moz-column-count:6; /* Firefox */
+        -webkit-column-count:6; /* Safari and Chrome */
+        column-count:6;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        hyphens: auto;
+    }
+}

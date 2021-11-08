@@ -1,0 +1,17 @@
+.entity{
+    font-size: 1em;
+    display: block;
+    cursor: pointer;
+}
+
+.entityRefs{
+
+}
+
+.entityRefs.show{
+
+}
+
+.entityRefs.hide{
+
+}
