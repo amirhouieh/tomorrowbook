@@ -13,6 +13,18 @@ export type TEntityGroup = {
 
 export type TEntityReference = {
     title: string;
-    text: string;
+    paragraphs: string[];
     pageid: string;
 }
+
+export interface IEntityWithReferences extends Entity{
+    references: TEntityReference[];
+    inText: string[];
+}
+
+export interface IOpenEntityState{
+    current: IEntityWithReferences|null;
+    prev: IEntityWithReferences|null
+}
+
+export type TEntityEventFn = (e: IEntityWithReferences|Entity, close?:boolean) => void;

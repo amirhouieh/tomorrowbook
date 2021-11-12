@@ -1,56 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { IEntityWithReferences, TEntityEventFn } from "../../../types";
 import { Entity } from "../../../libs/entity-extractor/class.entity";
-import { TEntityReference } from "../../../types";
-import { EntityReferenceComponent } from "../entity-refrence";
+import { EntityReferences } from "../entity-references";
 
 interface IProps {
     entity: Entity;
-    references: TEntityReference[]|null;
+    openEntities: IEntityWithReferences[];
+    onClick: (e: Entity) => void;
+    onTransitionDone: TEntityEventFn;
+    selfIndex: number;
+    groupIndex: number;
     open: boolean;
-    onOpen: (e: Entity) => void
-    onClose: (e: Entity) => void
 }
 
 import styles from "./styles.module.css";
 
 export const EntityComponent: React.FC<IProps> = (props) => {
-    const {entity, references, open, onOpen, onClose} = props;
-    const [showRef, setShowRef] = useState<boolean>(false);
+    const {entity, openEntities, onTransitionDone, groupIndex, open} = props;
+    const [appear, setAppear] = useState<boolean>(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setAppear(true);
+        }, groupIndex * 100)
+    })
 
     const onClick = () => {
-        if(open){
-            setShowRef(false);
-            setTimeout(() => {
-                onClose(entity);
-            }, 1000);
-        }else{
-            console.log("clicked", open, entity)
-            onOpen(entity);
-        }
+        props.onClick(entity);
     }
 
     return (
         <>
             <span onClick={onClick}
-                  style={{color: "rgb(0, 0, 255);"}}
-                  className={`${open ? "open-self" : ""} ${styles.entity}`}
+                  className={`cap ${styles.entity} ${appear ? styles.appear : ""} ${openEntities.length>0&&!open? styles.blue: ""}`}
+                  ref={ref}
             >
                 {entity.key}
             </span>
-            {
-                references&&
-                    <span className={`${showRef? styles.show: styles.hide} ${styles.entityRefs}`}>
-                        {
-                            references.map((ref) => (
-                                <EntityReferenceComponent
-                                    key={entity.key+ref.pageid}
-                                    entityKey={entity.key}
-                                    {...ref}
-                                />
-                            ))
-                        }
-                    </span>
-            }
+            <EntityReferences
+                show={open}
+                openEntity={openEntities.find(o => o.key===entity.key)}
+                entity={entity}
+                onTransitionDone={onTransitionDone}
+            />
         </>
     )
 }

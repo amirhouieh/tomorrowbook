@@ -2,16 +2,20 @@
     font-size: 1em;
     display: block;
     cursor: pointer;
+    color: black;
+    transform: translateX(-100%);
+
+    transition: transform 750ms ease-in-out, color 1s ease-in-out 250ms;
+
+}
+
+.entity.appear{
+    transform: translateX(0);
+}
+
+.entity.blue{
+    color: blue;
 }
 
 .entityRefs{
-
-}
-
-.entityRefs.show{
-
-}
-
-.entityRefs.hide{
-
 }

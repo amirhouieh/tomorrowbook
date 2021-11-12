@@ -5,11 +5,13 @@ import { useState } from "react";
 import { InputForm } from "../components/input-form";
 import { IReaderComponentInput } from "../types";
 
+import styles from "../styles/Create.module.css";
+
 const CreateReader: NextPage = () => {
     const [readerInput, setReaderInput] = useState<IReaderComponentInput|null>(null);
 
     return (
-        <div className={"reader-page-create"}>
+        <div className={styles.container}>
             {
                 readerInput?
                     <Reader {...readerInput} />

@@ -1,44 +1,103 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Entity } from "../../../libs/entity-extractor/class.entity";
 import { WikiPage } from "../../../libs/entity-extractor/class.page";
 import { IActiveEntity } from "../reader";
-import { getEntityReferences, groupEntities } from "../../../libs/entity-extractor/utils.extractor";
+import {
+    getEntityInTextReferences,
+    getEntityReferences,
+    groupEntities
+} from "../../../libs/entity-extractor/utils.extractor";
 import { EntityGroup } from "../entity-group";
 
 import styles from "./styles.module.css";
+import { IEntityWithReferences, IOpenEntityState, TEntityGroup } from "../../../types";
 
 interface IProps{
     entities: Entity[];
-    referencePages: WikiPage[];
+    pages: WikiPage[];
+    inputText: string[]
+}
+
+interface IEntityGroup{
+    group: TEntityGroup;
+    spaceAfter: number
 }
 
 export const ReaderContent: React.FC<IProps> = (props) => {
-    const {entities, referencePages} = props;
-    const [openEntity, setOpenEntity] = useState<IActiveEntity | null>(null);
+    const {entities, pages, inputText} = props;
+    const [openEntities, setOpenEntities] = useState<IEntityWithReferences[]>([]);
+    const [visibleEntity, setVisibleEntity] = useState<Entity|null>(null);
+    const [inTransition, setInTransition] = useState(false);
 
-    const onEntityOpen = (entity: Entity) => {
-        setOpenEntity({
-            entity,
-            references: getEntityReferences(entity, referencePages)
-        })
+    const [groups, setGroups] = useState<IEntityGroup[]>([])
+
+    useEffect(() => {
+        setGroups(
+            groupEntities(entities).map(group => ({
+                group,
+                spaceAfter: (~~(Math.random()*10)+2)
+            }))
+        )
+    }, [])
+
+    const isAlready = (e: IEntityWithReferences|Entity): boolean => {
+        return !!openEntities.find(o => o.key===e.key)
     }
 
-    const onEntityClose = (entity: Entity) => {
-        setOpenEntity(null)
+    const removeEntityFromOpenEntities = (e: Entity) => {
+        setOpenEntities(
+            openEntities.filter(o => o.key!==e.key)
+        )
+    }
+
+    const openEntity = (e: Entity) => {
+        setVisibleEntity(e);
+        setOpenEntities([
+            ...openEntities,
+            {
+                ...e,
+                references: getEntityReferences(e, pages),
+                inText: getEntityInTextReferences(e, inputText)
+            } as IEntityWithReferences
+        ])
+    }
+
+    const onEntityClicked = (e: Entity) => {
+        if(inTransition) return;
+
+        setInTransition(true);
+        if(openEntities.length===0||!isAlready(e)){
+            openEntity(e);
+            console.log("show")
+        }else{
+            console.log("hide")
+            setVisibleEntity(null);
+        }
+    }
+
+    const onEntityTransitionDone = (e: IEntityWithReferences|Entity, close: boolean = false) => {
+        if(close){
+            console.log("remove", e.key)
+            removeEntityFromOpenEntities(e);
+        }
+        setInTransition(false);
     }
 
     return (
         <article className={`${styles.content}`}>
             {
-                groupEntities(entities)
-                    .map((entityGroup, i) => (
+                groups
+                    .map(({group, spaceAfter}, i) => (
                         <EntityGroup
-                            key={entityGroup.score}
-                            {...entityGroup}
-                            onEntityOpen={onEntityOpen}
-                            onEntityClose={onEntityClose}
-                            openEntity={openEntity}
+                            key={group.score}
+                            {...group}
+                            spaceAfter={spaceAfter}
+                            openEntities={openEntities}
+                            visibleEntity={visibleEntity}
+                            onTransitionDone={onEntityTransitionDone}
+                            onEntityClicked={onEntityClicked}
+                            index={i}
                         />
                     ))
             }

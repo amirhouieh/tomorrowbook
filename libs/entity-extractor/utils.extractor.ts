@@ -1,6 +1,6 @@
 import { stop_words } from "./stopword";
 import { Entity } from "./class.entity";
-import { TEntityGroup, TEntityReference } from "../../types";
+import { IEntityWithReferences, TEntityGroup, TEntityReference } from "../../types";
 import { groupBy } from "../../utils";
 import { WikiPage } from "./class.page";
 
@@ -64,14 +64,31 @@ export const groupEntities = (entities: Entity[] ): TEntityGroup[] => {
 }
 
 export const getEntityReferences = (entity: Entity, pages: WikiPage[]): TEntityReference[] => {
-    return entity.inRefsText
-        .map((ref) => {
+    let refs: TEntityReference[] = [];
+
+    entity.inRefsText
+        .forEach((ref) => {
             const [refIndex, paragraphIndex] = ref;
             const refPage = pages.find((p) => p.index===refIndex);
-            return {
-                title: refPage!.metadata.title,
-                pageid: refPage!.metadata.pageid,
-                text: refPage!.paragraphs[paragraphIndex]
+
+            if(refs[refIndex]){
+                refs[refIndex].paragraphs.push(
+                    refPage!.paragraphs[paragraphIndex]
+                )
+            }else{
+                refs[refIndex] = {
+                    title: refPage!.metadata.title,
+                    pageid: refPage!.metadata.pageid,
+                    paragraphs: [refPage!.paragraphs[paragraphIndex]],
+                }
             }
         })
+
+    return refs;
+}
+
+export const getEntityInTextReferences = (entity: Entity, paras: string[]): string[] => {
+    return paras.filter((p) => {
+        return p.match(entity.regexKey()) !== null
+    })
 }

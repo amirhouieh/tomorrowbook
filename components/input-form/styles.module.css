@@ -1,3 +1,22 @@
 .container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50vw;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    min-width: 300px;
+    max-width: 600px;
+}
 
+.container > *{
+    width: 80%;
+}
+
+.inputGroup input{
+    width: 100%;
+    padding: 10px;
+}
+.inputGroup{
+    margin-bottom: 1em;
 }

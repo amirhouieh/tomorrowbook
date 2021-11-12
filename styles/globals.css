@@ -1,19 +1,85 @@
-html, body{
-  padding: 0;
+*{
   margin: 0;
-  font-family: "Andale Mono", AndaleMono, monospace;
-  font-size: 10pt;
-  line-height: 1.2em;
+  padding: 0;
 }
 
 :root{
   --padding: 8px;
   --headerH: 33px;
   --logoW: 100px;
-  --columnGap: 0.3%;
-  --columnNumber: 5;
+  --columnGap: 20px;
+  --columnNumber: 1;
+  --bodyLH: 1.3em;
+  --bodyFS: 10pt;
 }
+
+html, body{
+  padding: 0;
+  margin: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  /*font-family: 'Roboto Mono', monospace;*/
+  /*font-family: 'Space Mono', monospace;*/
+  /*font-family: "Andale Mono", AndaleMono, monospace;*/
+  font-size: var(--bodyFS);
+  line-height: var(--bodyLH);
+}
+
 
 body{
   padding: var(--padding);
+}
+
+main{
+  margin-top: 25px;
+}
+
+h1, h2, h3, h4, h5{
+  font-style: normal;
+  font-weight: normal;
+}
+
+.hl{
+  text-decoration: line-through;
+}
+
+.spaceAfter::after{
+  white-space: pre;
+  content: attr(data-content_after);
+}
+
+.spaceBefore:before{
+  white-space: pre;
+  content: attr(data-content_before);
+}
+
+.upper{
+  text-transform: uppercase;
+}
+
+.cap{
+  text-transform: capitalize;
+}
+
+@media (min-width: 600px) {
+  :root{
+    --columnNumber: 2;
+  }
+}
+
+@media (min-width: 750px) {
+  :root{
+    --columnNumber: 3;
+  }
+}
+
+@media (min-width: 1012px) {
+  :root{
+    --columnNumber: 4;
+  }
+}
+
+@media (min-width: 1400px) {
+  :root{
+    --columnNumber: 6;
+  }
 }

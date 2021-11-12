@@ -1,3 +1,25 @@
 .container{
 
 }
+
+.refTitle{
+    font-weight: normal;
+    color: black;
+    text-transform: uppercase;
+    font-size: 0.8em;
+}
+.refTitle a,
+.refTitle a:checked,
+.refTitle a:hover,
+.refTitle a:visited{
+    color: black;
+}
+
+
+.refParagraph{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 20;
+    -webkit-box-orient: vertical;
+    text-indent: 1em;
+}

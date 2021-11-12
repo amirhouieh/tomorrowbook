@@ -10,8 +10,8 @@ interface IProps{
 }
 
 export const InputForm: React.FC<IProps> = (props) => {
-    const [readerTitle, setReaderTitle] = useState<string|null>(null);
-    const [wikiTitle, setWikiTitle] = useState<string|null>(null);
+    const [readerTitle, setReaderTitle] = useState<string|null>("futurism");
+    const [wikiTitle, setWikiTitle] = useState<string|null>("futurism");
     const [selectedFile, setSelectedFile] = useState<null|File>(null);
 
     const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {

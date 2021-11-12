@@ -5,4 +5,13 @@
     width: calc(100vw - calc(2 * var(--padding)));
     height: var(--headerH);
     border-bottom: 1px solid black;
+
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+}
+
+.container nav{
+    margin-left: auto;
 }

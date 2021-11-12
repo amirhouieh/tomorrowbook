@@ -7,11 +7,17 @@ export const Layout: React.FC<any> = ({children}) => (
     <>
         <Head>
             <title>Tomorrow book</title>
-            <meta name="description" content="tomorrow book" />
-            <link rel="icon" href="/favicon.ico" />
+            <meta name="description" content="tomorrow book"/>
+            <link rel="icon" href="/favicon.ico"/>
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin={"true"}/>
+            <link
+                href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Roboto+Mono&family=Space+Mono&display=swap"
+                rel="stylesheet"/>
+
         </Head>
-        <Navbar />
+        <Navbar/>
         <main>{children}</main>
-        <Footer />
+        <Footer/>
     </>
 )

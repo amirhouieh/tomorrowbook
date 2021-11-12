@@ -34,7 +34,7 @@ export class EntityExtractor {
         options?: TEntityExtractorOptions,
         hooks: TEntityExtractorHooks = {}
     ) {
-        this.options = {...(options || {}), ...this.options};
+        this.options = {...this.options, ...(options || {})};
         this.hooks.onError = hooks.onError||this.hooks.onError;
         this.hooks.onPagePopulated = hooks.onPagePopulated||this.hooks.onPagePopulated;
 
@@ -117,7 +117,6 @@ export class EntityExtractor {
     }
 
     postProcessEntities() {
-
         this.entities = this.entities
             .filter((entity) => {
                 return entity.score > this.maxEntityScore / 35;
@@ -128,6 +127,8 @@ export class EntityExtractor {
     async extract(title: string, text: string) {
         //extract most frequented keyword entities
         this.extractEntities(title, text)
+
+        console.log(this.entities);
 
         //Get the list of most relevant Wiki articles
         await this.fetchContextData()

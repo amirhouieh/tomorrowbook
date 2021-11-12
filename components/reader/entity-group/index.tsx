@@ -1,35 +1,52 @@
 import React from "react";
-import { TEntityGroup } from "../../../types";
+import { IEntityWithReferences, TEntityEventFn, TEntityGroup } from "../../../types";
 import { Entity } from "../../../libs/entity-extractor/class.entity";
-import { IActiveEntity } from "../reader";
+
 import { EntityComponent } from "../entity-component";
 
-
 interface IProps extends TEntityGroup {
-    onEntityOpen: (entity: Entity) => void
-    onEntityClose: (entity: Entity) => void
-    openEntity: IActiveEntity | null;
+    onTransitionDone: TEntityEventFn;
+    onEntityClicked: (e: Entity, x: number) => void;
+    openEntities: IEntityWithReferences[];
+    visibleEntity: Entity|null;
+    spaceAfter: number;
+    index: number;
 }
 
 import styles from "./styles.module.css";
 
+
 export const EntityGroup: React.FC<IProps> = (props) => {
-    const {entities, score, openEntity, onEntityOpen, onEntityClose} = props;
+    const {
+        entities,
+        score,
+        openEntities,
+        onTransitionDone,
+        onEntityClicked,
+        index,
+        spaceAfter,
+        visibleEntity
+    } = props;
 
     return (
-        <p className={""} id={score.toString()}>
+        <section className={`${styles.container} spaceAfter`}
+                 id={score.toString()}
+                 data-content_after={new Array(spaceAfter).fill(null).map(_ => `\n`).join("")}
+        >
             {
-                entities.map((entity) => (
+                entities.map((entity, ei) => (
                     <EntityComponent
                         key={entity.key}
+                        groupIndex={index}
+                        selfIndex={ei}
                         entity={entity}
-                        references={openEntity&&openEntity.entity.key===entity.key? openEntity.references: null}
-                        onClose={onEntityClose}
-                        onOpen={onEntityOpen}
-                        open={openEntity!==null&&openEntity.entity.key===entity.key}
+                        onTransitionDone={onTransitionDone}
+                        onClick={onEntityClicked}
+                        openEntities={openEntities}
+                        open={visibleEntity?visibleEntity.key===entity.key: false}
                     />
                 ))
             }
-        </p>
+        </section>
     )
 }

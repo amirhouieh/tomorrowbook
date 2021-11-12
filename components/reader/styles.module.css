@@ -1,3 +1,29 @@
 .container{
 
 }
+
+
+
+.header{
+    position: fixed;
+    left: var(--padding);
+    top: var(--padding);
+    max-height: var(--headerH);
+    overflow: hidden;
+}
+
+.header h3{
+    font-size: 1rem;
+}
+
+.content{
+
+}
+
+.status{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50vw;
+    transform: translate(-50%, -50%);
+}
