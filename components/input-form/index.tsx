@@ -1,23 +1,23 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
 import styles from "./styles.module.css";
-import { IReaderComponentInput } from "../../types";
+import { IReaderDataBase } from "../../types";
 import { readTextFile } from "../../utils";
 
 
 interface IProps{
-    onSubmit: (output: IReaderComponentInput) => void
+    onSubmit: (output: IReaderDataBase) => void
 }
 
 export const InputForm: React.FC<IProps> = (props) => {
-    const [readerTitle, setReaderTitle] = useState<string|null>("futurism");
-    const [wikiTitle, setWikiTitle] = useState<string|null>("futurism");
+    const [readerTitle, setReaderTitle] = useState<string|null>(null);
+    const [wikiTitle, setWikiTitle] = useState<string|null>(null);
+    const [bookTitle, setBookTitle] = useState<string|null>(null);
     const [selectedFile, setSelectedFile] = useState<null|File>(null);
 
     const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
         try{
             const file = e.target.files![0];
-            console.log(file)
             setSelectedFile(file);
         } catch (e){
             console.log(e)
@@ -40,9 +40,11 @@ export const InputForm: React.FC<IProps> = (props) => {
             const inputText = await readTextFile(selectedFile);
 
             props.onSubmit({
-                wikiTitle: wikiTitle? wikiTitle.trim():null,
+                wikiTitle: wikiTitle? wikiTitle.trim(): null,
                 readerTitle: readerTitle.trim(),
-                inputText: inputText.trim()
+                inputText: inputText.trim(),
+                bookTitle: bookTitle? bookTitle.trim(): null,
+                tags: []
             });
 
         }catch (e){
@@ -75,8 +77,19 @@ export const InputForm: React.FC<IProps> = (props) => {
                 />
             </div>
             <div className={styles.inputGroup}>
+                <input type={"text"}
+                       value={bookTitle||""}
+                       placeholder={"book title"}
+                       required={false}
+                       onInput={(e) => {
+                           setBookTitle(e.currentTarget.value)
+                       }}
+                />
+                <small>if the text file is from a book</small>
+            </div>
+            <div className={styles.inputGroup}>
                 <input type={"file"}
-                       placeholder={"Wikipedia title"}
+                       placeholder={"txt file"}
                        required={true}
                        accept={".txt"}
                        onChange={handleFileInput}

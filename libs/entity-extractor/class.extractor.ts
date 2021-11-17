@@ -2,6 +2,7 @@ import { Entity } from "./class.entity";
 import { WikiPage } from "./class.page";
 import { prepareInputText } from "./utils.extractor";
 import { WikiApi } from "./wikiapi";
+import { IReaderDataBase } from "../../types";
 
 export type TEntityExtractorOptions = {
     numberOfPages: number;
@@ -11,15 +12,15 @@ export type TEntityExtractorHooks = {
     onError?: (e: Error|unknown) => void;
 }
 
-export class EntityExtractor {
+
+export class EntityExtractor{
     private entitiesAsText: string = "";
     private api: WikiApi;
-
     public entities: Entity[] = [];
     public pages: WikiPage[] = [];
     public maxEntityScore: number = 0;
-    public mainTitle!: string
-    public inputText!: string
+
+    public inputData!: IReaderDataBase;
 
     options: TEntityExtractorOptions = {
         numberOfPages: 10,
@@ -41,14 +42,9 @@ export class EntityExtractor {
         this.api = new WikiApi();
     }
 
-    extractEntities(
-        mainTitle: string,
-        inputText: string,
-    ) {
-        this.mainTitle = mainTitle;
-        this.inputText = inputText;
+    extractEntities() {
 
-        prepareInputText(this.inputText)
+        prepareInputText(this.inputData.inputText)
             .forEach((item) => {
                 const entity = new Entity(item);
                 if (entity.valid()) {
@@ -78,9 +74,10 @@ export class EntityExtractor {
 
     async fetchContextData() {
         try {
-            const {mainTitle, options: {numberOfPages}} = this;
+            const {options: {numberOfPages}} = this;
+            const wikiTitle = this.inputData.wikiTitle||this.inputData.readerTitle;
 
-            const pagesMetadata = await this.api.listPages(mainTitle, numberOfPages);
+            const pagesMetadata = await this.api.listPages(wikiTitle, numberOfPages);
             this.pages = pagesMetadata.map((meta, i) => new WikiPage(meta, i))
 
             await Promise.all(
@@ -101,9 +98,8 @@ export class EntityExtractor {
         }
     }
 
-
     scoreEntities() {
-        this.pages.forEach((page, pageIndex) => {
+        this.pages.forEach((page) => {
             this.entities = this.entities.map((entity) => {
                 entity.calcInitialScore(page);
                 this.maxEntityScore = Math.max(entity.score, this.maxEntityScore);
@@ -124,11 +120,10 @@ export class EntityExtractor {
             .sort((a, b) => b.score- a.score);
     }
 
-    async extract(title: string, text: string) {
+    async extract(inputData: IReaderDataBase) {
+        this.inputData = inputData
         //extract most frequented keyword entities
-        this.extractEntities(title, text)
-
-        console.log(this.entities);
+        this.extractEntities()
 
         //Get the list of most relevant Wiki articles
         await this.fetchContextData()

@@ -1,0 +1,49 @@
+.container{
+}
+
+.cover{
+    position: relative;
+}
+
+.cover > *{
+    position: absolute;
+    width: 100%;
+    padding-top: 140%;
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid blue;
+    color: blue;
+    background: white;
+    top: 0;
+    left: 0;
+    transition: background-color 100ms;
+}
+
+.cover > a > span{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.cover > a:hover{
+    background: blue;
+    color: white;
+}
+
+.cover > div{
+    z-index: -1;
+    transform: translate(6px, 6px);
+    background: black;
+}
+
+.date{
+
+}
+
+.tags{
+
+}
+
+.tag{
+
+}

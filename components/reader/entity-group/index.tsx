@@ -6,7 +6,7 @@ import { EntityComponent } from "../entity-component";
 
 interface IProps extends TEntityGroup {
     onTransitionDone: TEntityEventFn;
-    onEntityClicked: (e: Entity, x: number) => void;
+    onEntityClicked: (e: Entity) => void;
     openEntities: IEntityWithReferences[];
     visibleEntity: Entity|null;
     spaceAfter: number;
@@ -14,6 +14,7 @@ interface IProps extends TEntityGroup {
 }
 
 import styles from "./styles.module.css";
+
 
 
 export const EntityGroup: React.FC<IProps> = (props) => {

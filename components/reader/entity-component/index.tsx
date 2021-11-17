@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { IEntityWithReferences, TEntityEventFn } from "../../../types";
 import { Entity } from "../../../libs/entity-extractor/class.entity";
 import { EntityReferences } from "../entity-references";
+import { TEntityData } from "../../../libs/entity-extractor/types.extractor";
 
 interface IProps {
     entity: Entity;
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 import styles from "./styles.module.css";
+
 
 export const EntityComponent: React.FC<IProps> = (props) => {
     const {entity, openEntities, onTransitionDone, groupIndex, open} = props;

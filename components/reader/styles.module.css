@@ -2,14 +2,15 @@
 
 }
 
-
-
 .header{
     position: fixed;
     left: var(--padding);
     top: var(--padding);
     max-height: var(--headerH);
     overflow: hidden;
+    display: grid;
+    grid-template-columns: auto 100px;
+    grid-column-gap: 20px;
 }
 
 .header h3{

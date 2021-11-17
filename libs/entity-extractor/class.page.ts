@@ -1,9 +1,9 @@
 import { WikiApi } from "./wikiapi";
-import { IWikiAPI_SearchPage } from "./types.extractor";
+import { IWikiAPI_SearchPage, TWikiPageData } from "./types.extractor";
 import { sanitizeExtract } from "./utils.extractor";
 import { Entity } from "./class.entity";
 
-export class WikiPage{
+export class WikiPage implements TWikiPageData{
     private api: WikiApi;
     public text!: string;
     public paragraphs: string[] = [];
@@ -17,6 +17,17 @@ export class WikiPage{
     ) {
         this.isMain = this.index===0;
         this.api = new WikiApi();
+    }
+
+    data(): TWikiPageData{
+        return {
+            paragraphs:this.paragraphs,
+            isReference:this.isReference,
+            frequencyOfFirstPageTitleInThePage:this.frequencyOfFirstPageTitleInThePage,
+            isMain:this.isMain,
+            metadata:this.metadata,
+            index:this.index,
+        }
     }
 
     async populateContent(){

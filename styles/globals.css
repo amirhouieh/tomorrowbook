@@ -33,6 +33,10 @@ main{
   margin-top: 25px;
 }
 
+a, a:visited, a:hover, a:checked{
+  color: black;
+  text-decoration: none;
+}
 h1, h2, h3, h4, h5{
   font-style: normal;
   font-weight: normal;
@@ -60,25 +64,25 @@ h1, h2, h3, h4, h5{
   text-transform: capitalize;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 400px) {
   :root{
     --columnNumber: 2;
   }
 }
 
-@media (min-width: 750px) {
+@media (min-width: 600px) {
   :root{
     --columnNumber: 3;
   }
 }
 
-@media (min-width: 1012px) {
+@media (min-width: 900px) {
   :root{
     --columnNumber: 4;
   }
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1200px) {
   :root{
     --columnNumber: 6;
   }

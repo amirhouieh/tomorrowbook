@@ -1,9 +1,24 @@
 import { Entity } from "../libs/entity-extractor/class.entity";
+import { TEntityData } from "../libs/entity-extractor/types.extractor";
 
-export interface IReaderComponentInput{
+
+export interface IReaderDataBase {
     readerTitle: string;
-    wikiTitle: string | null;
+    wikiTitle?: string|null;
     inputText: string;
+    bookTitle?: string|null;
+    tags: string[];
+}
+
+export interface IReaderDataFromClient extends IReaderDataBase{
+}
+
+export interface IReaderDataFromServer extends IReaderDataBase{
+    createdAt: {
+        seconds: number;
+        milliseconds: number
+    };
+    id: string;
 }
 
 export type TEntityGroup = {

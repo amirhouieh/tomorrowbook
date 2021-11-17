@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { EntityReferenceComponent } from "../entity-refrence";
 import { IEntityWithReferences, TEntityEventFn } from "../../../types";
 
+import { Entity } from "../../../libs/entity-extractor/class.entity";
+
 interface IProps {
     show: boolean;
     openEntity: IEntityWithReferences|undefined;
@@ -12,7 +14,6 @@ interface IProps {
 }
 
 import styles from "./styles.module.css";
-import { Entity } from "../../../libs/entity-extractor/class.entity";
 
 export const EntityReferences: React.FC<IProps> = (props) => {
     const {
@@ -53,8 +54,9 @@ export const EntityReferences: React.FC<IProps> = (props) => {
                  ref={ref}
                  style={{
                      height: h + "px",
+                     // width: h>0? "100%": 0,
                      overflow: "hidden",
-                     // opacity: h>0? 1:0,
+                     opacity: h>0? 1:0,
                      paddingBottom: h>0? "2em": ""
                  }}
         >
@@ -79,7 +81,7 @@ export const EntityReferences: React.FC<IProps> = (props) => {
                 <EntityReferenceComponent key={4 + "intext"}
                                           entityKey={openEntity.key}
                                           pageid={""}
-                                          paragraphs={openEntity.inText.slice(0,2).map(s => `${s}...`)}
+                                          paragraphs={openEntity.inText.filter(a => a&&a.trim().length>0).slice(0,2).map(s => `${s}...`)}
                                           title={"In original text"}
                                           isWiki={false}
                 />

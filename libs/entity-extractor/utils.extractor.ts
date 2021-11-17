@@ -3,6 +3,7 @@ import { Entity } from "./class.entity";
 import { IEntityWithReferences, TEntityGroup, TEntityReference } from "../../types";
 import { groupBy } from "../../utils";
 import { WikiPage } from "./class.page";
+import { TEntityData, TWikiPageData } from "./types.extractor";
 
 export const isStop = (s: string): boolean => stop_words.indexOf(s.toLowerCase()) > -1;
 
@@ -49,7 +50,7 @@ export const sanitizeExtract = (extract: string): string => {
 }
 
 
-export const groupEntities = (entities: Entity[] ): TEntityGroup[] => {
+export const groupEntities = (entities: Entity[]): TEntityGroup[] => {
     return Object.entries<Entity[]>(
         groupBy<Entity>(entities, (entity) => {
             return entity.score > 100 ? ~~(entity.score / 100) * 100 : ~~(entity.score / 5);
@@ -63,7 +64,7 @@ export const groupEntities = (entities: Entity[] ): TEntityGroup[] => {
         );
 }
 
-export const getEntityReferences = (entity: Entity, pages: WikiPage[]): TEntityReference[] => {
+export const getEntityReferences = (entity: Entity, pages: TWikiPageData[]): TEntityReference[] => {
     let refs: TEntityReference[] = [];
 
     entity.inRefsText

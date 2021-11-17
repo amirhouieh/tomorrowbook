@@ -1,3 +1,5 @@
+import { TEntityReference } from "../../types";
+
 export interface IWikiAPI_Continue {
     sroffset: number;
     continue: string;
@@ -50,4 +52,19 @@ export interface IWikiAPI_pageListResponse extends IWikiAPI_Query<IWikiAPI_Query
 export interface IWikiAPI_pageExtractResponse extends IWikiAPI_Query<IWikiAPI_QueryPageExtract>{
 }
 
+export type TEntityData = {
+    score: number;
+    key: string;
+    isPhrase: boolean;
+    wikiRefs: TEntityReference[];
+}
 
+
+export type TWikiPageData = {
+    paragraphs: string[];
+    isReference: boolean;
+    frequencyOfFirstPageTitleInThePage: number;
+    isMain: boolean;
+    metadata: IWikiAPI_SearchPage;
+    index: number;
+}
