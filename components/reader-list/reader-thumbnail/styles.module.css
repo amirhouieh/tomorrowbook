@@ -3,6 +3,7 @@
 
 .cover{
     position: relative;
+    padding-top: 146%;
 }
 
 .cover > *{

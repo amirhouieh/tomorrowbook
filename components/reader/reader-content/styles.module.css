@@ -1,10 +1,14 @@
 .content{
-    height: calc(100vh - calc(var(--padding) * 2) - var(--headerH));
-
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
     hyphens: auto;
 
     column-count: var(--columnNumber);
     column-gap: var(--columnGap)
+}
+
+@media (min-width: 400px) {
+    .content{
+        height: calc(100vh - calc(var(--padding) * 2) - var(--headerH));
+    }
 }

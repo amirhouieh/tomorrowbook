@@ -6,4 +6,5 @@
     display: grid;
     grid-template-columns: repeat(calc(2 * var(--columnNumber)), 1fr);
     grid-column-gap: var(--columnGap);
+    grid-row-gap: var(--columnGap);
 }
