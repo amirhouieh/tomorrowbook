@@ -5,7 +5,7 @@
 
 :root{
   --padding: 8px;
-  --headerH: 33px;
+  --headerH: 43px;
   --logoW: 100px;
   --columnGap: 20px;
   --columnNumber: 1;
@@ -30,7 +30,7 @@ body{
 }
 
 main{
-  margin-top: 25px;
+  margin-top: var(--headerH);
 }
 
 a, a:visited, a:hover, a:checked{

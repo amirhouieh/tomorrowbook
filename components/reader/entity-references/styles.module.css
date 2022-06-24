@@ -1,3 +1,4 @@
 .references{
     transition: height 1s ease-in-out, opacity 1s linear;
+    /*display: inline-table;*/
 }

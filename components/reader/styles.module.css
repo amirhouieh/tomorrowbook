@@ -1,5 +1,4 @@
 .container{
-
 }
 
 .header{
@@ -17,8 +16,12 @@
     font-size: 1rem;
 }
 
-.content{
+.header small{
+    text-transform: none;
+}
 
+.content{
+    overflow-y: hidden;
 }
 
 .status{

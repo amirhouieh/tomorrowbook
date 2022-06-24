@@ -42,8 +42,8 @@ export const InputForm: React.FC<IProps> = (props) => {
             props.onSubmit({
                 wikiTitle: wikiTitle? wikiTitle.trim(): null,
                 readerTitle: readerTitle.trim(),
-                inputText: inputText.trim(),
-                bookTitle: bookTitle? bookTitle.trim(): null,
+                inputText: inputText.trim().replace(/\n\s*\n/g, '\n'),
+                bookTitle: bookTitle? bookTitle.trim(): selectedFile.name,
                 tags: []
             });
 

@@ -6,6 +6,7 @@ import styles from "./styles.module.css";
 import { EntityExtractor } from "../../libs/entity-extractor/class.extractor";
 import { ReaderContent } from "./reader-content";
 import { publishReader } from "../../firebase/db";
+import {useRouter} from "next/router";
 
 
 interface IProps{
@@ -20,6 +21,8 @@ export const Reader: React.FC<IProps> = (props) => {
     const [isReady, setIsReady] = useState<boolean>(false);
     const [published, setPublished] = useState<boolean>(false);
     const [titleBeingProcessed, setTitleBeingProcessed] = useState<string|null>(null);
+
+    const router = useRouter();
 
     useEffect(() => {
         extractor = new EntityExtractor({
@@ -42,7 +45,10 @@ export const Reader: React.FC<IProps> = (props) => {
             ...extractor.inputData,
             tags: extractor.entities.slice(0, 10).map(e => e.key),
         })
-            .then(() => setPublished(true))
+            .then(async (data) => {
+                await router.push(`/read/${data.id}`);
+                setPublished(true)
+            })
             .catch(e => {
                 console.log("error", e);
                 alert("something went wrong:/");
@@ -52,7 +58,20 @@ export const Reader: React.FC<IProps> = (props) => {
     return (
         <div className={`${styles.container}`}>
             <div className={`${styles.header} upper`}>
-                <h3>{data.readerTitle}</h3>
+                <div>
+                    <h3>{data.readerTitle}</h3>
+                    <small>
+                        <a href={`https://en.wikipedia.org/wiki/${data.wikiTitle}`}
+                           target={"_blank"}
+                           rel="noreferrer"
+                           title={`en.wikipedia.org/wiki/${data.wikiTitle}`}
+                        >
+                            {data.wikiTitle}
+                        </a>
+                        <span>{` <> `}</span>
+                        <i>{data.bookTitle}</i>
+                    </small>
+                </div>
                 {
                     (isReady&&create&&!published)&&
                     <button onClick={publishHandler}>PUBLISH</button>

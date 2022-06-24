@@ -30,7 +30,7 @@ export const EntityGroup: React.FC<IProps> = (props) => {
     } = props;
 
     return (
-        <section className={`${styles.container} spaceAfter`}
+        <div className={`${styles.container} spaceAfter`}
                  id={score.toString()}
                  data-content_after={new Array(spaceAfter).fill(null).map(_ => `\n`).join("")}
         >
@@ -48,6 +48,6 @@ export const EntityGroup: React.FC<IProps> = (props) => {
                     />
                 ))
             }
-        </section>
+        </div>
     )
 }

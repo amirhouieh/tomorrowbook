@@ -7,8 +7,17 @@
     column-gap: var(--columnGap)
 }
 
+.content::-webkit-scrollbar {
+    display: none;
+}
+.content {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
 @media (min-width: 400px) {
     .content{
         height: calc(100vh - calc(var(--padding) * 2) - var(--headerH));
+        overflow-y: hidden;
     }
 }

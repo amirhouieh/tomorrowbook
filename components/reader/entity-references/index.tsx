@@ -39,13 +39,16 @@ export const EntityReferences: React.FC<IProps> = (props) => {
 
     useEffect(() => {
         if(!openEntity) return;
-
         if (show && ref.current) {
             setH(calcH())
-            setTimeout(() => onTransitionDone(entity), transitionDuration + 50);
+            setTimeout(() => {
+                onTransitionDone(entity);
+            }, transitionDuration + 50);
         } else if (!show) {
             setH(0);
-            setTimeout(() => onTransitionDone(entity, true), transitionDuration + 50);
+            setTimeout(() => {
+                onTransitionDone(entity, true);
+            }, transitionDuration + 50);
         }
     }, [show])
 
@@ -54,8 +57,10 @@ export const EntityReferences: React.FC<IProps> = (props) => {
                  ref={ref}
                  style={{
                      height: h + "px",
-                     // width: h>0? "100%": 0,
-                     overflow: "hidden",
+                     // display: h>0? "block": "inline-block",
+                     // display: "contents",
+                     width: h>0? "100%": 0,
+                     // overflow: "hidden",
                      opacity: h>0? 1:0,
                      paddingBottom: h>0? "2em": ""
                  }}
