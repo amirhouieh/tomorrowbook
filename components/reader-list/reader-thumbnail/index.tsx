@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { IReaderDataFromServer } from "../../../types";
+import {IReaderDataFromServer} from "../../../types";
 
-interface IProps{
+interface IProps {
     reader: IReaderDataFromServer;
 }
 
@@ -15,12 +15,29 @@ export const ReaderThumbnail: React.FC<IProps> = ({reader}) => (
         <div className={`${styles.cover} upper`}>
             <Link href={`/read/${reader.id}`}>
                 <a>
-                    <span>
-                        {reader.readerTitle}
-                    </span>
+                    <article>
+                        <span>{reader.readerTitle}</span>
+                        <br/>
+                        <br/>
+                        <p style={{
+                            fontFamily: "serif",
+                            textTransform: "capitalize",
+                            // textAlign: "center"
+                        }}>
+                            <span>
+                                <i>{reader.wikiTitle}</i>
+                            </span>
+                            <br/>
+                            <span>&</span>
+                            <br/>
+                            <span>
+                                <i>{reader.bookTitle}</i>
+                            </span>
+                        </p>
+                    </article>
                 </a>
             </Link>
-            <div />
+            <div/>
         </div>
         {/*<time className={styles.date}>*/}
         {/*    {*/}

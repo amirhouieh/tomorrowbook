@@ -1,4 +1,5 @@
 .container{
+    width: 100%;
 }
 
 .cover{
@@ -8,7 +9,7 @@
 
 .cover > *{
     position: absolute;
-    width: 100%;
+    width: calc(100% + 20px);
     padding-top: 140%;
     display: block;
     box-sizing: border-box;
@@ -20,7 +21,7 @@
     transition: background-color 100ms;
 }
 
-.cover > a > span{
+.cover > a > *{
     position: absolute;
     top: 10px;
     left: 10px;
